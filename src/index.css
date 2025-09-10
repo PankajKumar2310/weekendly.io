@@ -1,4 +1,6 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -67,4 +69,42 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+
+.relaxed-theme {
+  @apply bg-blue-50;
+}
+
+.adventurous-theme {
+  @apply bg-green-50;
+}
+
+.social-theme {
+  @apply bg-indigo-50;
+}
+
+.productive-theme {
+  @apply bg-amber-50;
+}
+
+.family-theme {
+  @apply bg-pink-50;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400;
 }
