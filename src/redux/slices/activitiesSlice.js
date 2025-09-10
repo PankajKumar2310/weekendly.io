@@ -38,6 +38,9 @@ export const activitiesSlice = createSlice({
         activity => activity.id !== action.payload
       );
     },
+    loadActivities: (state, action) => {
+      state.activities = action.payload;
+    },
   },
 });
 
@@ -48,6 +51,7 @@ export const {
   addActivity,
   updateActivity,
   removeActivity,
+  loadActivities,
 } = activitiesSlice.actions;
 
 export const selectFilteredActivities = state => {

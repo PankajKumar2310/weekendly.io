@@ -48,7 +48,16 @@ export const scheduleSlice = createSlice({
     loadSchedule: (state, action) => {
       return action.payload;
     },
-    
+    updateScheduledActivity: (state, action) => {
+      const { activityId, day, updates } = action.payload;
+      const activityIndex = state[day].findIndex(a => a.id === activityId);
+      
+      if (activityIndex !== -1) {
+        state[day][activityIndex] = { ...state[day][activityIndex], ...updates };
+        // Re-sort after update
+        state[day] = [...state[day]].sort((a, b) => a.startTime - b.startTime);
+      }
+    },
   },
 });
 
@@ -58,6 +67,7 @@ export const {
   moveActivity,
   clearSchedule,
   loadSchedule,
+  updateScheduledActivity,
 } = scheduleSlice.actions;
 
 export default scheduleSlice.reducer;

@@ -5,6 +5,7 @@ import { store } from './redux/store';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadSchedule } from './redux/slices/scheduleSlice';
 import { setTheme } from './redux/slices/themeSlice';
+import { loadActivities } from './redux/slices/activitiesSlice';
 import ActivityLibrary from './components/ActivityLibrary';
 import WeekendSchedule from './components/WeekendSchedule';
 import Navbar from './components/Layout/Navbar';
@@ -16,17 +17,22 @@ function AppContent() {
   const dispatch = useDispatch();
   const currentTheme = useSelector(state => state.theme.currentTheme);
   const schedule = useSelector(state => state.schedule);
+  const activities = useSelector(state => state.activities.activities);
   const [savedSchedule, setSavedSchedule] = useLocalStorage('weekendly-schedule', {
     saturday: [],
     sunday: []
   });
   const [savedTheme, setSavedTheme] = useLocalStorage('weekendly-theme', 'relaxed');
+  const [savedActivities, setSavedActivities] = useLocalStorage('weekendly-activities', []);
 
   // Load saved data on initial render
   useEffect(() => {
     dispatch(loadSchedule(savedSchedule));
     dispatch(setTheme(savedTheme));
-  }, [dispatch, savedSchedule, savedTheme]);
+    if (savedActivities.length > 0) {
+      dispatch(loadActivities(savedActivities));
+    }
+  }, [dispatch, savedSchedule, savedTheme, savedActivities]);
 
   // Save schedule to local storage whenever it changes
   useEffect(() => {
@@ -37,6 +43,11 @@ function AppContent() {
   useEffect(() => {
     setSavedTheme(currentTheme);
   }, [currentTheme, setSavedTheme]);
+
+  // Save activities to local storage whenever they change
+  useEffect(() => {
+    setSavedActivities(activities);
+  }, [activities, setSavedActivities]);
 
   return (
     <div className={`min-h-screen  transition-colors duration-300 ${currentTheme}-theme`}>
