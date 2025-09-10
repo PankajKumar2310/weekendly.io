@@ -3,9 +3,11 @@ import React from 'react';
 import { useDrag } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 import { removeFromSchedule } from '../redux/slices/scheduleSlice';
+import useSchedule from '../hooks/useSchedule';
 
 const ScheduledActivity = ({ activity, day }) => {
   const dispatch = useDispatch();
+  const { formatTime } = useSchedule();
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'scheduled-activity',
@@ -46,7 +48,7 @@ const ScheduledActivity = ({ activity, day }) => {
       </div>
       
       <div className="text-sm mt-1 opacity-90">
-        {activity.duration} hour{activity.duration !== 1 ? 's' : ''}
+        {formatTime(activity.startTime)} - {formatTime(activity.startTime + activity.duration)}
       </div>
     </div>
   );

@@ -3,6 +3,8 @@ import React from 'react';
 import { useDrag } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 import { addToSchedule } from '../redux/slices/scheduleSlice';
+import ActivityModalTrigger from './ActivityModalTrigger';
+import { FiEdit3 } from 'react-icons/fi';
 
 const ActivityCard = ({ activity }) => {
   const dispatch = useDispatch();
@@ -52,7 +54,7 @@ const ActivityCard = ({ activity }) => {
           <p className="text-sm text-gray-600 mt-1">{activity.description}</p>
           
           <div className="flex items-center justify-between mt-3">
-            <span className="text-xs font-medium px-2 py-1 bg-gray-100 rounded-full">
+            <span className="text-xs font-medium px-2 py-1 bg-gray-600 rounded-full">
               {activity.duration} hours
             </span>
             
@@ -69,13 +71,24 @@ const ActivityCard = ({ activity }) => {
           </div>
         </div>
         
-        <button
-          onClick={handleQuickAdd}
-          className="text-sm px-2 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
-          title="Quick add to Saturday"
-        >
-          +
-        </button>
+        <div className="flex flex-col gap-1">
+          <button
+            onClick={handleQuickAdd}
+            className="text-sm px-2 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
+            title="Quick add to Saturday"
+          >
+            +
+          </button>
+          
+          <ActivityModalTrigger activity={activity}>
+            <button
+              className="text-sm px-2 py-1 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+              title="Edit activity"
+            >
+              <FiEdit3 size={12} />
+            </button>
+          </ActivityModalTrigger>
+        </div>
       </div>
     </div>
   );

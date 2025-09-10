@@ -73,23 +73,23 @@ button:focus-visible {
 
 
 .relaxed-theme {
-  @apply bg-blue-50;
+  @apply bg-gradient-to-br from-blue-50 to-cyan-50;
 }
 
 .adventurous-theme {
-  @apply bg-green-50;
+  @apply bg-gradient-to-br from-green-50 to-emerald-50;
 }
 
 .social-theme {
-  @apply bg-indigo-50;
+  @apply bg-gradient-to-br from-purple-50 to-pink-50;
 }
 
 .productive-theme {
-  @apply bg-amber-50;
+  @apply bg-gradient-to-br from-orange-50 to-yellow-50;
 }
 
 .family-theme {
-  @apply bg-pink-50;
+  @apply bg-gradient-to-br from-rose-50 to-pink-50;
 }
 
 /* Custom scrollbar */

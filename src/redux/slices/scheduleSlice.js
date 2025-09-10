@@ -48,6 +48,7 @@ export const scheduleSlice = createSlice({
     loadSchedule: (state, action) => {
       return action.payload;
     },
+    
   },
 });
 
