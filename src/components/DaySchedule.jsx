@@ -7,7 +7,7 @@ const DaySchedule = ({ day, activities }) => {
   const timeSlots = Array.from({ length: 16 }, (_, i) => i + 8); // 8 AM to 11 PM
 
   const [{ isOver }, drop] = useDrop(() => ({
-    accept: 'activity',
+    accept: ['activity', 'scheduled-activity'],
     drop: (item, monitor) => {
       const offset = monitor.getSourceClientOffset();
       const rect = document.getElementById(`${day}-schedule`).getBoundingClientRect();
@@ -32,6 +32,8 @@ const DaySchedule = ({ day, activities }) => {
       className={`p-4 rounded-lg border-2 border-dashed transition-colors ${
         isOver ? 'border-blue-400 bg-blue-50' : 'border-gray-200'
       }`}
+      role="region"
+      aria-label={`${day} schedule drop area`}
     >
       <h3 className="text-xl font-semibold text-gray-800 mb-4 text-center capitalize">{day}</h3>
       

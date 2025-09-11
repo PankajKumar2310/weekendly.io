@@ -2,8 +2,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+  friday: [],
   saturday: [],
   sunday: [],
+  monday: [],
+  enabledDays: ['saturday', 'sunday'],
 };
 
 export const scheduleSlice = createSlice({
@@ -18,14 +21,17 @@ export const scheduleSlice = createSlice({
         startTime: timeSlot
       };
       
+      if (!state[day]) state[day] = [];
       state[day] = [...state[day], newActivity].sort((a, b) => a.startTime - b.startTime);
     },
     removeFromSchedule: (state, action) => {
       const { activityId, day } = action.payload;
+      if (!state[day]) return;
       state[day] = state[day].filter(activity => activity.id !== activityId);
     },
     moveActivity: (state, action) => {
       const { fromDay, toDay, activityId, newTimeSlot } = action.payload;
+      if (!state[fromDay]) return;
       const activity = state[fromDay].find(a => a.id === activityId);
       
       if (!activity) return;
@@ -39,14 +45,24 @@ export const scheduleSlice = createSlice({
         startTime: newTimeSlot
       };
       
+      if (!state[toDay]) state[toDay] = [];
       state[toDay] = [...state[toDay], updatedActivity].sort((a, b) => a.startTime - b.startTime);
     },
     clearSchedule: (state) => {
+      state.friday = [];
       state.saturday = [];
       state.sunday = [];
+      state.monday = [];
     },
     loadSchedule: (state, action) => {
-      return action.payload;
+      const loaded = action.payload || {};
+      return {
+        friday: loaded.friday || [],
+        saturday: loaded.saturday || [],
+        sunday: loaded.sunday || [],
+        monday: loaded.monday || [],
+        enabledDays: loaded.enabledDays || state.enabledDays,
+      };
     },
     updateScheduledActivity: (state, action) => {
       const { activityId, day, updates } = action.payload;
@@ -58,6 +74,11 @@ export const scheduleSlice = createSlice({
         state[day] = [...state[day]].sort((a, b) => a.startTime - b.startTime);
       }
     },
+    setEnabledDays: (state, action) => {
+      const next = action.payload;
+      // Ensure at least one day enabled
+      state.enabledDays = Array.isArray(next) && next.length > 0 ? next : state.enabledDays;
+    },
   },
 });
 
@@ -68,6 +89,7 @@ export const {
   clearSchedule,
   loadSchedule,
   updateScheduledActivity,
+  setEnabledDays,
 } = scheduleSlice.actions;
 
 export default scheduleSlice.reducer;

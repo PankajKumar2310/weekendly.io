@@ -1,14 +1,15 @@
 // src/components/EditScheduledActivityModal.jsx
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateScheduledActivity } from '../redux/slices/scheduleSlice';
-import { useSelector } from 'react-redux';
 import useSchedule from '../hooks/useSchedule';
 
 const EditScheduledActivityModal = ({ isOpen, onClose, activity, day }) => {
   const dispatch = useDispatch();
   const { currentTheme } = useSelector(state => state.theme);
-  const { formatTime } = useSchedule();
+  const schedule = useSelector(state => state.schedule);
+  const { hasTimeConflict, formatTime } = useSchedule();
+  const [hasConflict, setHasConflict] = useState(false);
   const [formData, setFormData] = useState({
     startTime: 9,
     duration: 2,
@@ -26,6 +27,12 @@ const EditScheduledActivityModal = ({ isOpen, onClose, activity, day }) => {
       });
     }
   }, [activity, isOpen]);
+
+  useEffect(() => {
+    if (!activity) return;
+    const conflict = hasTimeConflict(schedule, day, formData.startTime, formData.duration, activity.id);
+    setHasConflict(conflict);
+  }, [formData.startTime, formData.duration, schedule, day, activity, hasTimeConflict]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -98,8 +105,8 @@ const EditScheduledActivityModal = ({ isOpen, onClose, activity, day }) => {
                 onChange={(e) => handleTimeChange(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
               />
-              <div className="text-sm text-gray-500 mt-1">
-                Current: {formatTime(formData.startTime)}
+              <div className={`text-sm mt-1 ${hasConflict ? 'text-red-600' : 'text-gray-500'}`}>
+                {hasConflict ? 'Time conflict with another activity' : `Current: ${formatTime(formData.startTime)}`}
               </div>
             </div>
 
@@ -117,8 +124,8 @@ const EditScheduledActivityModal = ({ isOpen, onClose, activity, day }) => {
                 onChange={(e) => setFormData({...formData, duration: parseFloat(e.target.value)})}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
               />
-              <div className="text-sm text-gray-500 mt-1">
-                Ends at: {formatTime(formData.startTime + formData.duration)}
+              <div className={`text-sm mt-1 ${hasConflict ? 'text-red-600' : 'text-gray-500'}`}>
+                {hasConflict ? 'Overlap detected. Adjust time or duration.' : `Ends at: ${formatTime(formData.startTime + formData.duration)}`}
               </div>
             </div>
 
@@ -161,7 +168,8 @@ const EditScheduledActivityModal = ({ isOpen, onClose, activity, day }) => {
               </button>
               <button
                 type="submit"
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center gap-2"
+                className={`px-4 py-2 rounded-lg transition-colors font-medium flex items-center gap-2 ${hasConflict ? 'bg-gray-300 text-gray-600 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
+                disabled={hasConflict}
               >
                 <span>Update</span>
                 <span className="text-lg">{activity.icon}</span>

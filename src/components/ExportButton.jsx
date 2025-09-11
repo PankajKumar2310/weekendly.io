@@ -15,36 +15,36 @@ const ExportButton = () => {
     
     const scheduleData = prepareScheduleForExport(schedule);
     
+    const daySections = schedule.enabledDays.map((day) => {
+      const items = scheduleData[day] || [];
+      const color = day === 'friday' ? '#3B82F6' : day === 'saturday' ? '#4F46E5' : day === 'sunday' ? '#10B981' : '#F59E0B';
+      const title = day.charAt(0).toUpperCase() + day.slice(1);
+      return `
+        <div>
+          <h3 class="text-xl font-semibold mb-4">${title}</h3>
+          <div class="space-y-3">
+            ${items.map(activity => `
+              <div class="p-3 rounded-lg border-l-4" style="border-color: ${color}">
+                <div class="font-semibold">${activity.title}</div>
+                <div class="text-sm text-gray-600">${activity.time}</div>
+                <div class="text-sm mt-1">${activity.description}</div>
+                <div class="text-xs text-gray-500 mt-1">Mood: ${activity.mood}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    const nowStr = new Date().toLocaleDateString();
+    const theme = (schedule?.enabledDays || []).join(', ').toUpperCase();
+
     exportElement.innerHTML = `
-      <h2 class="text-2xl font-bold text-center mb-6">My Weekend Plan</h2>
-      <div class="grid grid-cols-2 gap-6">
-        <div>
-          <h3 class="text-xl font-semibold mb-4">Saturday</h3>
-          <div class="space-y-3">
-            ${scheduleData.saturday.map(activity => `
-              <div class="p-3 rounded-lg border-l-4" style="border-color: #4F46E5">
-                <div class="font-semibold">${activity.title}</div>
-                <div class="text-sm text-gray-600">${activity.time}</div>
-                <div class="text-sm mt-1">${activity.description}</div>
-                <div class="text-xs text-gray-500 mt-1">Mood: ${activity.mood}</div>
-              </div>
-            `).join('')}
-          </div>
-        </div>
-        <div>
-          <h3 class="text-xl font-semibold mb-4">Sunday</h3>
-          <div class="space-y-3">
-            ${scheduleData.sunday.map(activity => `
-              <div class="p-3 rounded-lg border-l-4" style="border-color: #10B981">
-                <div class="font-semibold">${activity.title}</div>
-                <div class="text-sm text-gray-600">${activity.time}</div>
-                <div class="text-sm mt-1">${activity.description}</div>
-                <div class="text-xs text-gray-500 mt-1">Mood: ${activity.mood}</div>
-              </div>
-            `).join('')}
-          </div>
-        </div>
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-2xl font-bold">My Weekend Plan</h2>
+        <div class="text-sm text-gray-500">${nowStr} • Days: ${theme}</div>
       </div>
+      <div class="grid grid-cols-2 gap-6">${daySections}</div>
       <div class="text-center text-xs text-gray-500 mt-6">Created with Weekendly</div>
     `;
     

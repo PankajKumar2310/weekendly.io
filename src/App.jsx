@@ -12,6 +12,8 @@ import Navbar from './components/Layout/Navbar';
 import Footer from './components/Layout/Footer';
 import useLocalStorage from './hooks/useLocalStorage';
 import './App.css';
+import HolidaySuggestions from './components/HolidaySuggestions';
+
 
 function AppContent() {
   const dispatch = useDispatch();
@@ -19,8 +21,11 @@ function AppContent() {
   const schedule = useSelector(state => state.schedule);
   const activities = useSelector(state => state.activities.activities);
   const [savedSchedule, setSavedSchedule] = useLocalStorage('weekendly-schedule', {
+    friday: [],
     saturday: [],
-    sunday: []
+    sunday: [],
+    monday: [],
+    enabledDays: ['saturday', 'sunday']
   });
   const [savedTheme, setSavedTheme] = useLocalStorage('weekendly-theme', 'relaxed');
   const [savedActivities, setSavedActivities] = useLocalStorage('weekendly-activities', []);
@@ -54,6 +59,9 @@ function AppContent() {
       <div className="pt-2">   {/* padding inside instead of margin outside */}
     <Navbar />
   </div>
+  <div className="container mx-auto px-4 pb-2">
+        <HolidaySuggestions />
+      </div>
       
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col gap-8">

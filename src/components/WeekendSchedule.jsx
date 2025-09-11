@@ -5,6 +5,7 @@ import DaySchedule from './DaySchedule';
 
 const WeekendSchedule = () => {
   const schedule = useSelector(state => state.schedule);
+  const enabledDays = schedule.enabledDays || ['saturday', 'sunday'];
 
   return (
     <div className="bg-white rounded-xl shadow-md p-6">
@@ -13,9 +14,10 @@ const WeekendSchedule = () => {
         <span className="text-sm text-gray-500">{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</span>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <DaySchedule day="saturday" activities={schedule.saturday} />
-        <DaySchedule day="sunday" activities={schedule.sunday} />
+      <div className={`grid grid-cols-1 ${enabledDays.length >= 3 ? 'lg:grid-cols-3' : 'md:grid-cols-2'} gap-6`}>
+        {enabledDays.map((day) => (
+          <DaySchedule key={day} day={day} activities={schedule[day] || []} />
+        ))}
       </div>
     </div>
   );

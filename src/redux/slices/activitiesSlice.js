@@ -1,5 +1,6 @@
 // src/redux/slices/activitiesSlice.js
 import { createSlice } from '@reduxjs/toolkit';
+import { createSelector } from '@reduxjs/toolkit';
 import { activitiesData } from '../../data/activitiesData';
 
 const initialState = {
@@ -54,17 +55,26 @@ export const {
   loadActivities,
 } = activitiesSlice.actions;
 
-export const selectFilteredActivities = state => {
-  const { activities, searchTerm, selectedCategory, selectedMood } = state.activities;
-  
-  return activities.filter(activity => {
-    const matchesSearch = activity.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         activity.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'all' || activity.category === selectedCategory;
-    const matchesMood = selectedMood === 'all' || activity.mood.includes(selectedMood);
-    
-    return matchesSearch && matchesCategory && matchesMood;
-  });
-};
+const selectActivitiesState = (state) => state.activities;
+
+export const selectFilteredActivities = createSelector(
+  [selectActivitiesState],
+  ({ activities, searchTerm, selectedCategory, selectedMood }) => {
+    const term = searchTerm.trim().toLowerCase();
+    const bySearch = term
+      ? activities.filter(a =>
+          a.title.toLowerCase().includes(term) ||
+          a.description.toLowerCase().includes(term)
+        )
+      : activities;
+    const byCategory = selectedCategory === 'all'
+      ? bySearch
+      : bySearch.filter(a => a.category === selectedCategory);
+    const byMood = selectedMood === 'all'
+      ? byCategory
+      : byCategory.filter(a => (a.mood || []).includes(selectedMood));
+    return byMood;
+  }
+);
 
 export default activitiesSlice.reducer;

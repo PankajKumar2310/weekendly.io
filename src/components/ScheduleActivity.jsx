@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useDrag } from 'react-dnd';
 import { useDispatch } from 'react-redux';
-import { removeFromSchedule } from '../redux/slices/scheduleSlice';
+import { removeFromSchedule, addToSchedule } from '../redux/slices/scheduleSlice';
 import useSchedule from '../hooks/useSchedule';
 import EditScheduledActivityModal from './EditScheduledActivityModal';
 // import { FiEdit3 } from 'react-icons/fi';
@@ -27,6 +27,12 @@ const ScheduledActivity = ({ activity, day }) => {
     }));
   };
 
+  const handleDuplicate = () => {
+    const nextSlot = Math.ceil((activity.startTime + activity.duration) * 2) / 2;
+    const timeSlot = Math.min(Math.max(nextSlot, 8), 23);
+    dispatch(addToSchedule({ activity, day, timeSlot }));
+  };
+
   return (
     <div
       ref={drag}
@@ -46,9 +52,19 @@ const ScheduledActivity = ({ activity, day }) => {
             onClick={() => setIsEditModalOpen(true)}
             className="w-6 h-6 rounded-full bg-white bg-opacity-20 flex items-center justify-center hover:bg-opacity-30 transition-colors"
             title="Edit activity"
+            aria-label="Edit scheduled activity"
           >
            {/* <FiEdit3 size={12} color="white" /> */}
            ✏️
+          </button>
+
+          <button
+            onClick={handleDuplicate}
+            className="w-6 h-6 rounded-full bg-white bg-opacity-20 flex items-center justify-center hover:bg-opacity-30 transition-colors"
+            title="Duplicate activity"
+            aria-label="Duplicate scheduled activity"
+          >
+            ⧉
           </button>
           
           <button

@@ -3,6 +3,10 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setTheme } from '../../redux/slices/themeSlice';
 import ExportButton from '../ExportButton';
+import DaySelector from '../DaySelector';
+// import HolidaySuggestions from '../HolidaySuggestions';
+import { clearSchedule } from '../../redux/slices/scheduleSlice';
+import Button from '../ui/Button';
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -24,6 +28,7 @@ const Navbar = () => {
 
           {/* Right side items */}
           <div className="flex items-center gap-4">
+            <DaySelector />
             {/* Theme Dropdown */}
             <div className="relative">
               <button
@@ -73,9 +78,12 @@ const Navbar = () => {
 
             {/* Export Button */}
             <ExportButton />
+            <Button variant="danger" size="md" onClick={() => dispatch(clearSchedule())} aria-label="Clear entire schedule">Clear</Button>
           </div>
         </div>
       </div>
+
+      
 
       {/* Click outside to close dropdown */}
       {isThemeDropdownOpen && (

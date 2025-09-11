@@ -6,18 +6,16 @@ const formatTime = (hour) => {
 };
 
 export const prepareScheduleForExport = (schedule) => {
-  return {
-    saturday: schedule.saturday.map(activity => ({
+  const days = ['friday', 'saturday', 'sunday', 'monday'];
+  const result = {};
+  days.forEach((day) => {
+    const list = schedule[day] || [];
+    result[day] = list.map(activity => ({
       title: activity.title,
       time: `${formatTime(activity.startTime)} - ${formatTime(activity.startTime + activity.duration)}`,
       description: activity.description,
-      mood: activity.mood.join(', ')
-    })),
-    sunday: schedule.sunday.map(activity => ({
-      title: activity.title,
-      time: `${formatTime(activity.startTime)} - ${formatTime(activity.startTime + activity.duration)}`,
-      description: activity.description,
-      mood: activity.mood.join(', ')
-    }))
-  };
+      mood: (activity.mood || []).join(', ')
+    }));
+  });
+  return result;
 };
