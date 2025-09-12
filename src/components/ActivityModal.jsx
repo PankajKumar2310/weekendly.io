@@ -21,17 +21,34 @@ const ActivityModal = ({ isOpen, onClose, editingActivity = null }) => {
   const icons = ['🎯', '🍕', '🥾', '🎬', '📚', '🧘', '👨‍🍳', '🎮', '🏖️', '🏛️', '🛍️', '🎨', '🏃‍♂️', '🎵', '🌅'];
 
   useEffect(() => {
-    if (editingActivity) {
-      setFormData({
-        title: editingActivity.title || '',
-        description: editingActivity.description || '',
-        category: editingActivity.category || 'leisure',
-        duration: editingActivity.duration || 2,
-        mood: editingActivity.mood || [],
-        icon: editingActivity.icon || '🎯',
-        color: editingActivity.color || '#3B82F6'
-      });
-    } else {
+    if (isOpen) {
+      if (editingActivity) {
+        setFormData({
+          title: editingActivity.title || '',
+          description: editingActivity.description || '',
+          category: editingActivity.category || 'leisure',
+          duration: editingActivity.duration || 2,
+          mood: editingActivity.mood || [],
+          icon: editingActivity.icon || '🎯',
+          color: editingActivity.color || '#3B82F6'
+        });
+      } else {
+        setFormData({
+          title: '',
+          description: '',
+          category: 'leisure',
+          duration: 2,
+          mood: [],
+          icon: '🎯',
+          color: '#3B82F6'
+        });
+      }
+    }
+  }, [editingActivity, isOpen]);
+
+  // Reset form when modal closes
+  useEffect(() => {
+    if (!isOpen) {
       setFormData({
         title: '',
         description: '',
@@ -42,7 +59,7 @@ const ActivityModal = ({ isOpen, onClose, editingActivity = null }) => {
         color: '#3B82F6'
       });
     }
-  }, [editingActivity, isOpen]);
+  }, [isOpen]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

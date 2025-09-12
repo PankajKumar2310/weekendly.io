@@ -18,7 +18,7 @@ const EditScheduledActivityModal = ({ isOpen, onClose, activity, day }) => {
   });
 
   useEffect(() => {
-    if (activity) {
+    if (isOpen && activity) {
       setFormData({
         startTime: activity.startTime,
         duration: activity.duration,
@@ -26,7 +26,20 @@ const EditScheduledActivityModal = ({ isOpen, onClose, activity, day }) => {
         description: activity.description || ''
       });
     }
-  }, [activity, isOpen]);
+  }, [isOpen, activity]);
+
+  // Reset form when modal closes
+  useEffect(() => {
+    if (!isOpen) {
+      setFormData({
+        startTime: 9,
+        duration: 2,
+        title: '',
+        description: ''
+      });
+      setHasConflict(false);
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     if (!activity) return;
@@ -66,8 +79,8 @@ const EditScheduledActivityModal = ({ isOpen, onClose, activity, day }) => {
   if (!isOpen || !activity) return null;
 
   return (
-    <div className="fixed inset-0  bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className={`bg-white rounded-xl shadow-2xl w-full max-w-md max-h-[80vh] overflow-y-auto ${currentTheme}-theme`}>
+    <div className="fixed inset-0 w-full h-full bg-black bg-opacity-20 flex items-center justify-center z-50 p-4">
+      <div className={`bg-white rounded-xl shadow-2xl w-full max-w-md max-h-[70vh] overflow-y-auto ${currentTheme}-theme`}>
         <div className="p-4">
           {/* Header */}
           <div className="flex items-center justify-between mb-4">
