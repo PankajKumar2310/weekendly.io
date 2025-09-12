@@ -10,6 +10,15 @@ export const store = configureStore({
     schedule: scheduleReducer,
     theme: themeReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      immutableCheck: { 
+        ignoredPaths: ['schedule.friday', 'schedule.saturday', 'schedule.sunday', 'schedule.monday'] 
+      },
+      serializableCheck: { 
+        ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'] 
+      }
+    }),
 });
 
 export default store;

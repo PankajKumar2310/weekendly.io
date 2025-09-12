@@ -8,7 +8,8 @@ export const activitiesData = [
       duration: 2,
       mood: ['social', 'relaxed'],
       icon: '🥞',
-      color: '#FF9E80'
+      color: '#FF9E80',
+      mealType: 'brunch'
     },
     {
       id: 'hiking',
@@ -58,7 +59,63 @@ export const activitiesData = [
       duration: 2,
       mood: ['creative', 'relaxed'],
       icon: '👨‍🍳',
-      color: '#EF9A9A'
+      color: '#EF9A9A',
+      mealType: 'dinner'
+    },
+    {
+      id: 'breakfast',
+      title: 'Breakfast',
+      description: 'Start your day with a hearty breakfast',
+      category: 'food',
+      duration: 1,
+      mood: ['relaxed', 'energetic'],
+      icon: '🍳',
+      color: '#FFB74D',
+      mealType: 'breakfast'
+    },
+    {
+      id: 'lunch',
+      title: 'Lunch',
+      description: 'Midday meal with friends or family',
+      category: 'food',
+      duration: 1.5,
+      mood: ['social', 'relaxed'],
+      icon: '🥗',
+      color: '#81C784',
+      mealType: 'lunch'
+    },
+    {
+      id: 'dinner',
+      title: 'Dinner',
+      description: 'Evening meal at home or restaurant',
+      category: 'food',
+      duration: 2,
+      mood: ['social', 'relaxed'],
+      icon: '🍽️',
+      color: '#F06292',
+      mealType: 'dinner'
+    },
+    {
+      id: 'snacks',
+      title: 'Snack Time',
+      description: 'Light snacks and beverages',
+      category: 'food',
+      duration: 0.5,
+      mood: ['relaxed', 'cozy'],
+      icon: '🍿',
+      color: '#FFD54F',
+      mealType: 'snack'
+    },
+    {
+      id: 'coffee-break',
+      title: 'Coffee Break',
+      description: 'Relax with coffee and conversation',
+      category: 'food',
+      duration: 1,
+      mood: ['relaxed', 'social'],
+      icon: '☕',
+      color: '#8D6E63',
+      mealType: 'beverage'
     },
     {
       id: 'gaming',

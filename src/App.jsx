@@ -1,6 +1,7 @@
 // src/App.jsx
 import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { store } from './redux/store';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadSchedule } from './redux/slices/scheduleSlice';
@@ -13,6 +14,16 @@ import Footer from './components/Layout/Footer';
 import useLocalStorage from './hooks/useLocalStorage';
 import './App.css';
 import HolidaySuggestions from './components/HolidaySuggestions';
+
+// Create a client
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 
 function AppContent() {
@@ -82,9 +93,11 @@ function AppContent() {
 
 function App() {
   return (
-    <Provider store={store}>
-      <AppContent />
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <AppContent />
+      </Provider>
+    </QueryClientProvider>
   );
 }
 

@@ -95,7 +95,7 @@ const ActivityLibrary = () => {
         <span>{activities.length} activities</span>
       </div>
 
-      <div className="space-y-4 max-h-[calc(100vh-250px)] overflow-y-auto grid grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-4" role="list" aria-label="Activity results">
+      <div className="space-y-4 max-h-[calc(100vh-250px)] overflow-y-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" role="list" aria-label="Activity results">
         {activities.map(activity => (
           <ActivityCard key={activity.id} activity={activity} />
         ))}

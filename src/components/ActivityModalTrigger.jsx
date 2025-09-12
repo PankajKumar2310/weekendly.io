@@ -7,12 +7,12 @@ const ActivityModalTrigger = ({ activity = null, children, className = "" }) => 
 
   return (
     <>
-      <button
+      <div
         onClick={() => setIsModalOpen(true)}
-        className={`className bg-white`}
+        className={`cursor-pointer ${className}`}
       >
         {children}
-      </button>
+      </div>
       
       <ActivityModal
         isOpen={isModalOpen}

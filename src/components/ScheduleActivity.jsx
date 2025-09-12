@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useDrag } from 'react-dnd';
 import { useDispatch } from 'react-redux';
-import { removeFromSchedule, addToSchedule } from '../redux/slices/scheduleSlice';
+import { removeFromSchedule, addToSchedule, moveActivity } from '../redux/slices/scheduleSlice';
 import useSchedule from '../hooks/useSchedule';
 import EditScheduledActivityModal from './EditScheduledActivityModal';
 // import { FiEdit3 } from 'react-icons/fi';
@@ -15,6 +15,31 @@ const ScheduledActivity = ({ activity, day }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'scheduled-activity',
     item: { activity, day },
+    end: (item, monitor) => {
+      const dropResult = monitor.getDropResult();
+      if (item && dropResult) {
+        const { targetDay, targetTimeSlot } = dropResult;
+        
+        
+        // If moving to a different day
+        if (targetDay !== day) {
+          dispatch(moveActivity({
+            fromDay: day,
+            toDay: targetDay,
+            activityId: activity.id,
+            newTimeSlot: targetTimeSlot
+          }));
+        } else {
+          // If reordering within the same day, just update the time
+          dispatch(moveActivity({
+            fromDay: day,
+            toDay: day,
+            activityId: activity.id,
+            newTimeSlot: targetTimeSlot
+          }));
+        }
+      }
+    },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
@@ -36,8 +61,8 @@ const ScheduledActivity = ({ activity, day }) => {
   return (
     <div
       ref={drag}
-      className={`p-3 rounded-lg cursor-move transition-all ${
-        isDragging ? 'opacity-50' : 'hover:shadow-md'
+      className={`p-3 rounded-lg cursor-move transition-all duration-200 ${
+        isDragging ? 'opacity-50 scale-95 rotate-2 shadow-lg' : 'hover:shadow-md hover:scale-[1.02]'
       }`}
       style={{ backgroundColor: activity.color, color: 'white' }}
     >
