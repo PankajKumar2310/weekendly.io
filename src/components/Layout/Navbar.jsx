@@ -1,17 +1,25 @@
 // src/components/Layout/Navbar.jsx
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { setTheme } from '../../redux/slices/themeSlice';
 import ExportButton from '../ExportButton';
 import DaySelector from '../DaySelector';
 // import HolidaySuggestions from '../HolidaySuggestions';
 import { clearSchedule } from '../../redux/slices/scheduleSlice';
 import Button from '../ui/Button';
+import AppIcon from '../AppIcon';
 
 const Navbar = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
   const { currentTheme, themes } = useSelector(state => state.theme);
+  const schedule = useSelector(state => state.schedule);
   const [isThemeDropdownOpen, setIsThemeDropdownOpen] = useState(false);
+
+  const hasActivities = schedule.saturday?.length > 0 || schedule.sunday?.length > 0;
+  const isPreviewPage = location.pathname === '/preview';
 
   const currentThemeData = themes.find(theme => theme.id === currentTheme);
 
@@ -76,8 +84,29 @@ const Navbar = () => {
               )}
             </div>
 
-            {/* Export Button */}
-            <ExportButton />
+            {/* Share/Export Button */}
+            {isPreviewPage ? (
+              <Button 
+                onClick={() => navigate('/')}
+                className="flex items-center gap-2"
+              >
+                <AppIcon name="Home" size={16} />
+                Home
+              </Button>
+            ) : (
+              <>
+                {hasActivities && (
+                  <Button 
+                    onClick={() => navigate('/preview')}
+                    className="flex items-center gap-2"
+                  >
+                    <AppIcon name="Share2" size={16} />
+                    Share
+                  </Button>
+                )}
+                <ExportButton />
+              </>
+            )}
             <Button variant="danger" size="md" onClick={() => dispatch(clearSchedule())} aria-label="Clear entire schedule">Clear</Button>
           </div>
         </div>

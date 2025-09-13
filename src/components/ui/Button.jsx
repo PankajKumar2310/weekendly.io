@@ -16,10 +16,17 @@ const sizes = {
   lg: 'px-4 py-3',
 };
 
-const Button = ({ variant = 'primary', size = 'md', className = '', children, as: Tag = 'button', ...props }) => {
+const Button = ({ variant = 'primary', size = 'md', className = '', children, as: Tag = 'button', onClick, ...props }) => {
   const classes = `${base} ${variants[variant]} ${sizes[size]} ${className}`;
+  
+  const handleClick = (e) => {
+    if (onClick) {
+      onClick(e);
+    }
+  };
+  
   return (
-    <Tag className={classes} {...props}>
+    <Tag className={classes} onClick={handleClick} {...props}>
       {children}
     </Tag>
   );
