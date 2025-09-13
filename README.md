@@ -2,7 +2,7 @@
 
 A comprehensive weekend planning web application that helps users design their perfect weekend by choosing activities, meals, and moods, then arranging them into a personalized Saturday–Sunday schedule.
 
-![Weekendly Preview](https://via.placeholder.com/800x400/4F46E5/FFFFFF?text=Weekendly+Weekend+Planner)
+![Weekendly Preview](https://weekendlyio.vercel.app/)
 
 ## ✨ Features
 
