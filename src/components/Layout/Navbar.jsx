@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { setTheme } from '../../redux/slices/themeSlice';
-import ExportButton from '../ExportButton';
+// import ExportButton from '../ExportButton';
 import DaySelector from '../DaySelector';
 // import HolidaySuggestions from '../HolidaySuggestions';
 import { clearSchedule } from '../../redux/slices/scheduleSlice';
@@ -104,7 +104,7 @@ const Navbar = () => {
                     Share
                   </Button>
                 )}
-                <ExportButton />
+                {/* <ExportButton /> */}
               </>
             )}
             <Button variant="danger" size="md" onClick={() => dispatch(clearSchedule())} aria-label="Clear entire schedule">Clear</Button>

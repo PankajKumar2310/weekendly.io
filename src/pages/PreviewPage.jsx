@@ -1,11 +1,15 @@
 // src/pages/PreviewPage.jsx
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, Suspense, lazy } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import html2canvas from 'html2canvas';
-import WeekendPlanCard from '../components/WeekendPlanCard';
 import AppIcon from '../components/AppIcon';
 import Button from '../components/ui/Button';
+
+// Lazy load heavy components
+const WeekendPlanCard = lazy(() => import('../components/WeekendPlanCard'));
+
+// Dynamic import for html2canvas to reduce initial bundle size
+const loadHtml2Canvas = () => import('html2canvas');
 
 const PreviewPage = () => {
   const navigate = useNavigate();
@@ -37,6 +41,9 @@ const PreviewPage = () => {
 
     setIsExporting(true);
     try {
+      // Dynamically import html2canvas only when needed
+      const html2canvas = (await loadHtml2Canvas()).default;
+      
       const canvas = await html2canvas(cardRef.current, {
         backgroundColor: null,
         scale: 2,
@@ -176,13 +183,22 @@ const PreviewPage = () => {
           </div>
           <div className="p-6">
             <div ref={cardRef}>
-              <WeekendPlanCard
-                schedule={schedule}
-                colorScheme={colorScheme}
-                layout={layout}
-                showHeader={true}
-                showFooter={true}
-              />
+              <Suspense fallback={
+                <div className="bg-gradient-to-br from-purple-600 to-pink-600 rounded-xl p-6 text-white min-h-[600px] flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+                    <p className="text-white/80">Loading preview...</p>
+                  </div>
+                </div>
+              }>
+                <WeekendPlanCard
+                  schedule={schedule}
+                  colorScheme={colorScheme}
+                  layout={layout}
+                  showHeader={true}
+                  showFooter={true}
+                />
+              </Suspense>
             </div>
           </div>
         </div>

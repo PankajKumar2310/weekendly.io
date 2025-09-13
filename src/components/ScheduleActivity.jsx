@@ -1,10 +1,30 @@
 // src/components/ScheduledActivity.jsx
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import { useDrag } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 import { removeFromSchedule, addToSchedule, moveActivity } from '../redux/slices/scheduleSlice';
 import useSchedule from '../hooks/useSchedule';
-import EditScheduledActivityModal from './EditScheduledActivityModal';
+
+// Lazy load the edit modal since it's only used when editing
+const EditScheduledActivityModal = lazy(() => import('./EditScheduledActivityModal'));
+
+// Loading component for edit modal
+const EditModalLoader = () => (
+  <div className="fixed inset-0 w-full h-full bg-black bg-opacity-20 flex items-center justify-center z-50 p-4">
+    <div className="bg-white rounded-xl shadow-2xl w-full max-w-md max-h-[70vh] overflow-y-auto">
+      <div className="p-4">
+        <div className="animate-pulse">
+          <div className="h-6 bg-gray-200 rounded mb-4"></div>
+          <div className="space-y-3">
+            <div className="h-4 bg-gray-200 rounded"></div>
+            <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+            <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
 // import { FiEdit3 } from 'react-icons/fi';
 
 const ScheduledActivity = ({ activity, day }) => {
@@ -117,13 +137,17 @@ const ScheduledActivity = ({ activity, day }) => {
         </div>
       </div>
       
-      <EditScheduledActivityModal
-        key={`edit-${activity.id}-${isEditModalOpen}`}
-        isOpen={isEditModalOpen}
-        onClose={() => setIsEditModalOpen(false)}
-        activity={activity}
-        day={day}
-      />
+      {isEditModalOpen && (
+        <Suspense fallback={<EditModalLoader />}>
+          <EditScheduledActivityModal
+            key={`edit-${activity.id}-${isEditModalOpen}`}
+            isOpen={isEditModalOpen}
+            onClose={() => setIsEditModalOpen(false)}
+            activity={activity}
+            day={day}
+          />
+        </Suspense>
+      )}
     </>
   );
 };
