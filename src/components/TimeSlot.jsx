@@ -15,10 +15,10 @@ const TimeSlot = ({ time, day, activities, isDragOver = false }) => {
       <div 
         className={`flex-1 border-l pl-3 py-2 relative transition-all duration-200 ${
           isDragOver 
-            ? 'border-blue-400 bg-blue-100 border-dashed shadow-inner' 
-            : 'border-gray-200 border-dashed hover:border-gray-300'
+            ? 'border-blue-400 bg-blue-100 border-solid shadow-inner' 
+            : 'border-gray-300 border-solid hover:border-gray-400'
         }`}
-        style={{ borderStyle: 'dashed' }}
+        style={{ borderStyle: 'solid' }}
       >
         <div className="absolute -left-1.5 top-3 w-3 h-3 rounded-full bg-gray-300"></div>
         

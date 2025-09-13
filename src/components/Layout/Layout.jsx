@@ -4,7 +4,6 @@ import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadSchedule } from '../../redux/slices/scheduleSlice';
 import { setTheme } from '../../redux/slices/themeSlice';
-import { loadActivities } from '../../redux/slices/activitiesSlice';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import Navbar from './Navbar';
 import Footer from './Footer';
@@ -15,7 +14,6 @@ const Layout = ({ children }) => {
   const location = useLocation();
   const currentTheme = useSelector(state => state.theme.currentTheme);
   const schedule = useSelector(state => state.schedule);
-  const activities = useSelector(state => state.activities.activities);
   
   const [savedSchedule, setSavedSchedule] = useLocalStorage('weekendly-schedule', {
     friday: [],
@@ -25,19 +23,15 @@ const Layout = ({ children }) => {
     enabledDays: ['saturday', 'sunday']
   });
   const [savedTheme, setSavedTheme] = useLocalStorage('weekendly-theme', 'relaxed');
-  const [savedActivities, setSavedActivities] = useLocalStorage('weekendly-activities', []);
 
   // Load saved data on initial render only
   useEffect(() => {
     dispatch(loadSchedule(savedSchedule));
     dispatch(setTheme(savedTheme));
-    if (savedActivities.length > 0) {
-      dispatch(loadActivities(savedActivities));
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]); // Only depend on dispatch, not the localStorage values
 
-  // Save schedule to local storage whenever it changes
+  // Save schedule to local storage whenever it changes (weekend plan activities only)
   useEffect(() => {
     setSavedSchedule(schedule);
   }, [schedule, setSavedSchedule]);
@@ -46,11 +40,6 @@ const Layout = ({ children }) => {
   useEffect(() => {
     setSavedTheme(currentTheme);
   }, [currentTheme, setSavedTheme]);
-
-  // Save activities to local storage whenever they change
-  useEffect(() => {
-    setSavedActivities(activities);
-  }, [activities, setSavedActivities]);
 
   const isHomePage = location.pathname === '/';
 
