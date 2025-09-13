@@ -25,8 +25,8 @@ function App() {
       <Provider store={store}>
         <Router>
           <Routes>
-            <Route path="/" element={<Layout><HomePage /></Layout>} />
-            <Route path="/preview" element={<Layout><PreviewPage /></Layout>} />
+            <Route path="/" element={<Layout key="home"><HomePage /></Layout>} />
+            <Route path="/preview" element={<Layout key="preview"><PreviewPage /></Layout>} />
           </Routes>
         </Router>
       </Provider>

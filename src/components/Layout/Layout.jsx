@@ -27,14 +27,15 @@ const Layout = ({ children }) => {
   const [savedTheme, setSavedTheme] = useLocalStorage('weekendly-theme', 'relaxed');
   const [savedActivities, setSavedActivities] = useLocalStorage('weekendly-activities', []);
 
-  // Load saved data on initial render
+  // Load saved data on initial render only
   useEffect(() => {
     dispatch(loadSchedule(savedSchedule));
     dispatch(setTheme(savedTheme));
     if (savedActivities.length > 0) {
       dispatch(loadActivities(savedActivities));
     }
-  }, [dispatch, savedSchedule, savedTheme, savedActivities]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]); // Only depend on dispatch, not the localStorage values
 
   // Save schedule to local storage whenever it changes
   useEffect(() => {
