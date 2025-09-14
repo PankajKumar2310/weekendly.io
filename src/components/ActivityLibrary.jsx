@@ -31,9 +31,9 @@ const ActivityLibrary = memo(() => {
   const moods = ['all', 'social', 'relaxed', 'active', 'adventurous', 'calm', 'energetic', 'cozy', 'focused', 'creative'];
 
   return (
-    <div className="relative">
+    <div className="relative min-h-[400px]">
       {/* Main Card with Gradient Background */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 rounded-2xl border border-blue-100 shadow-lg">
+      <div className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 rounded-2xl border border-blue-100 shadow-lg min-h-[400px]">
         {/* Decorative Background Elements */}
         <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-blue-200/20 to-indigo-200/20 rounded-full -translate-y-20 translate-x-20"></div>
         <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-purple-200/20 to-pink-200/20 rounded-full translate-y-16 -translate-x-16"></div>

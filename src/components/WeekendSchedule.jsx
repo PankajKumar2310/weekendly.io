@@ -8,9 +8,9 @@ const WeekendSchedule = () => {
   const enabledDays = schedule.enabledDays || ['saturday', 'sunday'];
 
   return (
-    <section className="relative" aria-label="Weekend schedule planning">
+    <section className="relative min-h-[400px]" aria-label="Weekend schedule planning">
       {/* Main Card with Gradient Background */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 rounded-2xl border border-indigo-100 shadow-lg">
+      <div className="relative overflow-hidden bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 rounded-2xl border border-indigo-100 shadow-lg min-h-[400px]">
         {/* Decorative Background Elements */}
         <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-indigo-200/20 to-purple-200/20 rounded-full -translate-y-20 translate-x-20"></div>
         <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-pink-200/20 to-orange-200/20 rounded-full translate-y-16 -translate-x-16"></div>

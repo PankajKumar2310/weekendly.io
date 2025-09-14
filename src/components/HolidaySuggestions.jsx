@@ -176,9 +176,9 @@ const HolidaySuggestions = () => {
   };
 
   return (
-    <div className="mt-4 relative">
+    <div className="mt-4 relative min-h-[200px]">
       {/* Main Card with Gradient Background */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 rounded-2xl border border-indigo-100 shadow-lg">
+      <div className="relative overflow-hidden bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 rounded-2xl border border-indigo-100 shadow-lg min-h-[200px]">
         {/* Decorative Background Elements */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-indigo-200/20 to-purple-200/20 rounded-full -translate-y-16 translate-x-16"></div>
         <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-pink-200/20 to-orange-200/20 rounded-full translate-y-12 -translate-x-12"></div>

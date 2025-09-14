@@ -84,7 +84,7 @@ const ActivityCard = ({ activity }) => {
   return (
     <div
       ref={drag}
-      className={`p-4 rounded-lg border cursor-grab bg-white duration-200 ${
+      className={`p-4 rounded-lg border cursor-grab bg-white duration-200 min-h-[120px] ${
         isDragging ? 'opacity-100 scale-95' : 'hover:shadow-md'
       }`}
       style={{ borderLeft: `4px solid ${activity.color}` }}
