@@ -123,6 +123,7 @@ const HolidaySuggestions = () => {
   const enabledDays = useSelector(state => state.schedule.enabledDays || ['saturday', 'sunday']);
   const currentYear = new Date().getFullYear();
   const [isExpanded, setIsExpanded] = useState(false);
+  const [showAllWeekendSuggestions, setShowAllWeekendSuggestions] = useState(false);
   
   // Use Indian holidays API
   const { data: holidays, isLoading, error } = useIndianHolidays(currentYear);
@@ -195,20 +196,37 @@ const HolidaySuggestions = () => {
               </div>
             </div>
             
-            {hasAllHolidays && (
-              <button
-                onClick={() => setIsExpanded(!isExpanded)}
-                className="flex items-center gap-2 px-4 py-2 bg-white/80 hover:bg-white rounded-xl shadow-sm transition-all duration-200 hover:shadow-md"
-                aria-expanded={isExpanded}
-                aria-controls="all-holidays-section"
-                aria-label={isExpanded ? 'Collapse all holidays view' : 'Expand to view all holidays'}
-              >
-                <span className="text-sm font-medium text-gray-700">
-                  {isExpanded ? 'Show Less' : 'View All Holidays'}
-                </span>
-                {isExpanded ? <FiChevronUp className="text-gray-600" /> : <FiChevronDown className="text-gray-600" />}
-              </button>
-            )}
+            <div className="flex gap-2">
+              {hasAllHolidays && (
+                <button
+                  onClick={() => setIsExpanded(!isExpanded)}
+                  className="flex items-center gap-2 px-4 py-2 bg-white/80 hover:bg-white rounded-xl shadow-sm transition-all duration-200 hover:shadow-md"
+                  aria-expanded={isExpanded}
+                  aria-controls="all-holidays-section"
+                  aria-label={isExpanded ? 'Collapse all holidays view' : 'Expand to view all holidays'}
+                >
+                  <span className="text-sm font-medium text-gray-700">
+                    {isExpanded ? 'Show Less' : 'View All Holidays'}
+                  </span>
+                  {isExpanded ? <FiChevronUp className="text-gray-600" /> : <FiChevronDown className="text-gray-600" />}
+                </button>
+              )}
+              
+              {hasFallbackSuggestions && (
+                <button
+                  onClick={() => setShowAllWeekendSuggestions(!showAllWeekendSuggestions)}
+                  className="flex items-center gap-2 px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-xl shadow-sm transition-all duration-200 hover:shadow-md"
+                  aria-expanded={showAllWeekendSuggestions}
+                  aria-controls="all-weekend-suggestions-section"
+                  aria-label={showAllWeekendSuggestions ? 'Hide all weekend suggestions' : 'View all weekend suggestions'}
+                >
+                  <span className="text-sm font-medium">
+                    {showAllWeekendSuggestions ? 'Hide Weekend' : 'View All Weekend Suggestions'}
+                  </span>
+                  {showAllWeekendSuggestions ? <FiChevronUp className="text-blue-600" /> : <FiChevronDown className="text-blue-600" />}
+                </button>
+              )}
+            </div>
           </div>
 
           {/* Loading State */}
@@ -320,6 +338,56 @@ const HolidaySuggestions = () => {
               <div className="flex items-center gap-2 mb-4">
                 <FiClock className="text-blue-500" />
                 <h4 className="font-semibold text-gray-800">Weekend Suggestions</h4>
+              </div>
+              
+              <div className="grid gap-3">
+                {fallbackSuggestions.map(s => (
+                  <div key={s.key} className="flex items-center justify-between p-4 bg-white/70 backdrop-blur-sm rounded-xl border border-white/50 shadow-sm hover:shadow-md transition-all duration-200 hover:bg-white/90">
+                    <div className="flex items-center gap-4 flex-1">
+                      <div className="p-2 bg-white rounded-lg shadow-sm">
+                        <FiCalendar className="text-blue-500" />
+                      </div>
+                      
+                      <div className="flex-1">
+                        <div className="font-semibold text-gray-800 text-base mb-1">{s.label}</div>
+                        <div className="flex items-center gap-2 text-sm text-gray-600">
+                          <span className="px-2 py-1 rounded-full text-xs font-medium text-white bg-gradient-to-r from-blue-400 to-indigo-500">
+                            Weekend
+                          </span>
+                          <FiClock className="text-gray-400" />
+                          <span>{s.date ? s.date.toLocaleDateString('en-IN', { 
+                            weekday: 'long', 
+                            day: 'numeric', 
+                            month: 'long', 
+                            year: 'numeric' 
+                          }) : 'Date not available'}</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <button
+                      onClick={() => dispatch(setEnabledDays(s.days))}
+                      className={`px-4 py-2 rounded-xl font-medium text-sm transition-all duration-200 ${
+                        JSON.stringify(enabledDays) === JSON.stringify(s.days)
+                          ? 'bg-gradient-to-r from-emerald-500 to-green-600 text-white shadow-lg shadow-emerald-200'
+                          : 'bg-white text-gray-700 border border-gray-200 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700'
+                      }`}
+                      title={`Set ${s.days.join(', ')} as enabled days`}
+                    >
+                      {s.days.length === 3 ? '3-Day Weekend' : '2-Day Weekend'}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* All Weekend Suggestions - Shows when button is clicked */}
+          {showAllWeekendSuggestions && hasFallbackSuggestions && (
+            <div id="all-weekend-suggestions-section" className="border-t border-white/50 pt-6" role="region" aria-label="All weekend suggestions">
+              <div className="flex items-center gap-2 mb-4">
+                <FiClock className="text-blue-500" />
+                <h4 className="font-semibold text-gray-800">All Weekend Suggestions</h4>
               </div>
               
               <div className="grid gap-3">
