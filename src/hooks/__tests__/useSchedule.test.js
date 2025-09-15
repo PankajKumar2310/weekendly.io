@@ -1,4 +1,4 @@
-// src/hooks/__tests__/useSchedule.test.js
+
 import { renderHook, act } from '@testing-library/react';
 import useSchedule from '../useSchedule';
 
@@ -74,7 +74,7 @@ describe('useSchedule', () => {
       expect(hasTimeConflict(schedule, 'saturday', 9.5, 1)).toBe(true);
       expect(hasTimeConflict(schedule, 'saturday', 8.5, 1)).toBe(true);
 
-      // Conflict with second activity (14-16)
+      
       expect(hasTimeConflict(schedule, 'saturday', 14, 1)).toBe(true);
       expect(hasTimeConflict(schedule, 'saturday', 15, 1)).toBe(true);
       expect(hasTimeConflict(schedule, 'saturday', 13.5, 1)).toBe(true);
@@ -90,7 +90,7 @@ describe('useSchedule', () => {
         ]
       };
 
-      // New activity (9-12) completely contains existing activity (10-12)
+      
       expect(hasTimeConflict(schedule, 'saturday', 9, 3)).toBe(true);
     });
 
@@ -104,7 +104,7 @@ describe('useSchedule', () => {
         ]
       };
 
-      // New activity (10-12) is completely contained by existing activity (9-13)
+      
       expect(hasTimeConflict(schedule, 'saturday', 10, 2)).toBe(true);
     });
 
@@ -144,7 +144,7 @@ describe('useSchedule', () => {
         sunday: [{ id: '2', startTime: 14, duration: 2 }]
       };
 
-      // No conflict when checking different day
+     
       expect(hasTimeConflict(schedule, 'sunday', 9, 1)).toBe(false);
       expect(hasTimeConflict(schedule, 'saturday', 14, 2)).toBe(false);
     });

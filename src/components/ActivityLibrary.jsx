@@ -1,4 +1,3 @@
-// src/components/ActivityLibrary.jsx
 import React, { useState, useEffect, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -17,7 +16,7 @@ const ActivityLibrary = memo(() => {
   const { searchTerm, selectedCategory, selectedMood } = useSelector(state => state.activities);
   const [localSearch, setLocalSearch] = useState(searchTerm);
 
-  // Debounce search dispatch
+  // Debounce search from redux state
   useEffect(() => {
     const id = setTimeout(() => {
       if (localSearch !== searchTerm) {

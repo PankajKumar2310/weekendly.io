@@ -1,4 +1,3 @@
-// src/components/TimeSlot.jsx
 import React from 'react';
 import ScheduleActivity from './ScheduleActivity';
 import useSchedule from '../hooks/useSchedule';

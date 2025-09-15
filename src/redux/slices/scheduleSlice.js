@@ -1,4 +1,3 @@
-// src/redux/slices/scheduleSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {

@@ -1,4 +1,3 @@
-// src/redux/slices/activitiesSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 import { createSelector } from '@reduxjs/toolkit';
 import { activitiesData } from '../../data/activitiesData';

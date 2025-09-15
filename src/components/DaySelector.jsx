@@ -1,4 +1,4 @@
-// src/components/DaySelector.jsx
+
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setEnabledDays } from '../redux/slices/scheduleSlice';
@@ -17,7 +17,7 @@ const DaySelector = () => {
     } else {
       next = [...enabledDays, day].sort((a, b) => allDays.indexOf(a) - allDays.indexOf(b));
     }
-    // Ensure at least one day remains
+     //enabled at least one day remains
     if (next.length === 0) return;
     dispatch(setEnabledDays(next));
   };
@@ -25,7 +25,7 @@ const DaySelector = () => {
   const titleCase = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
       {allDays.map(day => (
         <button
           key={day}

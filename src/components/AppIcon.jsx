@@ -1,4 +1,3 @@
-// src/components/AppIcon.jsx
 import React from 'react';
 import { 
   Calendar, 

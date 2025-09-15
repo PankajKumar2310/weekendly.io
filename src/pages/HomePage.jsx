@@ -1,4 +1,3 @@
-// src/pages/HomePage.jsx
 import React, { Suspense, lazy } from 'react';
 
 // Lazy load heavy components

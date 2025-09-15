@@ -1,4 +1,4 @@
-// src/pages/PreviewPage.jsx
+
 import React, { useState, useRef, Suspense, lazy } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -57,7 +57,7 @@ const PreviewPage = () => {
       if (format === 'png') {
         link.href = canvas.toDataURL('image/png');
       } else {
-        // For PDF, we'll use a library like jsPDF
+        // For PDF, we'll use a library like jsPDF - in feature if required
         link.href = canvas.toDataURL('image/png');
       }
       

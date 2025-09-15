@@ -1,4 +1,3 @@
-// src/components/Layout/Footer.jsx
 import React from 'react';
 import { FiHeart } from 'react-icons/fi';
 

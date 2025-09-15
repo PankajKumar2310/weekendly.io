@@ -1,7 +1,7 @@
-// src/components/ActivityModalTrigger.jsx
+
 import React, { useState, Suspense, lazy } from 'react';
 
-// Lazy load the modal component since it's only used when triggered
+// Lazy load the modal component 
 const ActivityModal = lazy(() => import('./ActivityModal'));
 
 // Loading component for modal

@@ -1,4 +1,4 @@
-// src/components/__tests__/ActivityCard.test.jsx
+
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';

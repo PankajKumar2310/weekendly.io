@@ -1,4 +1,3 @@
-// src/components/ActivityCard.jsx
 import React, { useState } from 'react';
 import { useDrag } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
@@ -75,7 +74,7 @@ const ActivityCard = ({ activity }) => {
     monday: 'Monday'
   };
 
-  // Generate time options (8 AM to 11 PM)
+  // Generate time options (8 AM to 11 PM) fixed time schedule
   const timeOptions = Array.from({ length: 16 }, (_, i) => {
     const hour = i + 8;
     return { value: hour, label: formatTime(hour) };
@@ -139,7 +138,7 @@ const ActivityCard = ({ activity }) => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-4">
           <div className={`bg-white rounded-xl shadow-2xl w-full max-w-md max-h-[70vh] overflow-y-auto ${currentTheme}-theme`}>
             <div className="p-6">
-              {/* Header */}
+             
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-lg font-semibold text-gray-800">Quick Add Activity</h3>
                 <button
@@ -152,7 +151,7 @@ const ActivityCard = ({ activity }) => {
                 </button>
               </div>
               
-              {/* Day Selection */}
+              {/* Day Selection by day */}
               <div className="mb-6">
                 <label className="block text-sm font-medium text-gray-700 mb-3">Select Day</label>
                 <div className="grid grid-cols-2 gap-3">
@@ -172,7 +171,7 @@ const ActivityCard = ({ activity }) => {
                 </div>
               </div>
 
-              {/* Time Selection */}
+              {/* Time Selection by hour */}
               {selectedDay && (
                 <div className="mb-6">
                   <label className="block text-sm font-medium text-gray-700 mb-3">Select Time</label>

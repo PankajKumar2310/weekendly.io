@@ -1,4 +1,3 @@
-// src/components/ExportButton.jsx
 import React from 'react';
 import { useSelector } from 'react-redux';
 import html2canvas from 'html2canvas';
@@ -9,7 +8,7 @@ const ExportButton = () => {
   // const currentTheme = useSelector(state => state.theme.currentTheme);
 
   const exportAsImage = async () => {
-    // Create a temporary element for export
+    
     const exportElement = document.createElement('div');
     exportElement.className = 'p-6 bg-white rounded-xl shadow-lg';
     

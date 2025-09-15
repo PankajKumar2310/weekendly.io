@@ -1,4 +1,3 @@
-// src/components/Layout/Layout.jsx
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -28,10 +27,11 @@ const Layout = ({ children }) => {
   useEffect(() => {
     dispatch(loadSchedule(savedSchedule));
     dispatch(setTheme(savedTheme));
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]); // Only depend on dispatch, not the localStorage values
+  }, [dispatch]); 
 
-  // Save schedule to local storage whenever it changes (weekend plan activities only)
+  
   useEffect(() => {
     setSavedSchedule(schedule);
   }, [schedule, setSavedSchedule]);

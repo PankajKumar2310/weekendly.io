@@ -1,4 +1,3 @@
-// src/redux/store.js
 import { configureStore } from '@reduxjs/toolkit';
 import activitiesReducer from './slices/activitiesSlice';
 import scheduleReducer from './slices/scheduleSlice';

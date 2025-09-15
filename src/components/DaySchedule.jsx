@@ -1,4 +1,4 @@
-// src/components/DaySchedule.jsx
+
 import React from 'react';
 import { useDrop } from 'react-dnd';
 import TimeSlot from './TimeSlot';
@@ -14,7 +14,7 @@ const DaySchedule = ({ day, activities }) => {
         const rect = document.getElementById(`${day}-schedule`);
         
         if (!offset || !rect) {
-          // Fallback to a default time slot if offset or rect is null
+          //default time slot if offset or rect is null
           return {
             day,
             timeSlot: 9,
@@ -28,7 +28,7 @@ const DaySchedule = ({ day, activities }) => {
         const hourHeight = rectBounds.height / 16;
         const timeSlot = Math.floor(relativeY / hourHeight) + 8;
         
-        // Ensure timeSlot is within valid range
+        // validation of time slot is within valid range
         const validTimeSlot = Math.max(8, Math.min(23, timeSlot));
         
         

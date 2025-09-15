@@ -1,4 +1,3 @@
-// src/components/EditScheduledActivityModal.jsx
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateScheduledActivity } from '../redux/slices/scheduleSlice';

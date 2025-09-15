@@ -1,4 +1,3 @@
-// hooks/useIndianHolidays.js
 import { useQuery } from "@tanstack/react-query";
 import { fetchIndianHolidays } from "../api/holidays";
 

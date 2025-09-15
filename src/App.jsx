@@ -1,4 +1,3 @@
-// src/App.jsx
 import React, { Suspense, lazy } from 'react';
 import { Provider } from 'react-redux';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -21,7 +20,7 @@ const LoadingSpinner = () => (
   </div>
 );
 
-// Create a client
+// Create a client for react query to manage api state
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

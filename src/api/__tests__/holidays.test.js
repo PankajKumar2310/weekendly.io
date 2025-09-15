@@ -1,4 +1,4 @@
-// src/api/__tests__/holidays.test.js
+
 import { fetchIndianHolidays } from '../holidays';
 
 // Mock fetch globally

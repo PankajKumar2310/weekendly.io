@@ -1,4 +1,3 @@
-// src/hooks/useSchedule.js
 import { useCallback } from 'react';
 
 function useSchedule() {

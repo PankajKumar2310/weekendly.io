@@ -1,11 +1,10 @@
-// src/components/ScheduledActivity.jsx
 import React, { useState, Suspense, lazy } from 'react';
 import { useDrag } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 import { removeFromSchedule, addToSchedule, moveActivity } from '../redux/slices/scheduleSlice';
 import useSchedule from '../hooks/useSchedule';
 
-// Lazy load the edit modal since it's only used when editing
+// Lazy load for reduce bundle size
 const EditScheduledActivityModal = lazy(() => import('./EditScheduledActivityModal'));
 
 // Loading component for edit modal
@@ -25,7 +24,7 @@ const EditModalLoader = () => (
     </div>
   </div>
 );
-// import { FiEdit3 } from 'react-icons/fi';
+
 
 const ScheduledActivity = ({ activity, day }) => {
   const dispatch = useDispatch();

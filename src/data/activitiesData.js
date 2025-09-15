@@ -1,4 +1,3 @@
-// src/data/activitiesData.js
 export const activitiesData = [
   {
     id: 'brunch',

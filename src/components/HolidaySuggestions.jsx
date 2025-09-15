@@ -1,4 +1,3 @@
-// src/components/HolidaySuggestions.jsx
 import React, { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setEnabledDays } from '../redux/slices/scheduleSlice';
@@ -15,12 +14,12 @@ import {
   FiMoon
 } from 'react-icons/fi';
 
-// Generate weekend suggestions based on Indian holidays
+//weekend suggestion
 function getHolidayWeekendSuggestions(holidays = [], today = new Date()) {
   const suggestions = [];
   const currentYear = today.getFullYear();
   
-  // Filter holidays for current and next year
+  // Filter holiodays based on year
   const relevantHolidays = holidays.filter(holiday => {
     const holidayDate = new Date(holiday.date.iso);
     const holidayYear = holidayDate.getFullYear();
@@ -80,11 +79,11 @@ function getHolidayWeekendSuggestions(holidays = [], today = new Date()) {
     }
   });
 
-  // Sort by date and return all (not just top 5)
+  //sorting by day type
   return suggestions.sort((a, b) => a.date - b.date);
 }
 
-// Fallback function for when API is not available
+// default weekend suggestion when api is not available
 function getFallbackWeekendSuggestions(today = new Date()) {
   const suggestions = [];
   const base = new Date(today);
@@ -382,7 +381,7 @@ const HolidaySuggestions = () => {
             </div>
           )}
 
-          {/* All Weekend Suggestions - Shows when button is clicked */}
+          {/* All Weekend Suggestions - disabled by default */}
           {showAllWeekendSuggestions && hasFallbackSuggestions && (
             <div id="all-weekend-suggestions-section" className="border-t border-white/50 pt-6" role="region" aria-label="All weekend suggestions">
               <div className="flex items-center gap-2 mb-4">

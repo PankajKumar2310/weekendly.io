@@ -1,4 +1,3 @@
-// src/components/WeekendPlanCard.jsx
 import React from 'react';
 import Icon from './AppIcon';
 

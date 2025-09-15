@@ -1,4 +1,3 @@
-// src/components/Layout/Header.jsx
 import React from 'react';
 import ThemeSelector from '../ThemeSelector';
 import ExportButton from '../ExportButton';
