@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { setTheme } from '../../redux/slices/themeSlice';
-// import ExportButton from '../ExportButton';
 import DaySelector from '../DaySelector';
-// import HolidaySuggestions from '../HolidaySuggestions';
 import { clearSchedule } from '../../redux/slices/scheduleSlice';
 import Button from '../ui/Button';
 import AppIcon from '../AppIcon';
@@ -25,7 +23,7 @@ const Navbar = () => {
   const currentThemeData = themes.find(theme => theme.id === currentTheme);
 
   return (
-    <nav className="bg-white min-w-[10px] shadow-md border-b border-gray-200 p-2 rounded-full m-2 md:m-5">
+    <nav className="bg-white min-w-[10px] md: bg-transparent shadow-md border-b border-gray-200 p-2 rounded-full m-2 md:m-5 relative z-50">
       <div className="container mx-auto px-2 md:px-4">
         <div className="flex items-center justify-between h-12 md:h-16">
           {/* Logo */}
@@ -38,6 +36,7 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-4">
             <DaySelector />
+
             {/* Theme Dropdown */}
             <div className="relative">
               <button
@@ -59,12 +58,12 @@ const Navbar = () => {
                 </svg>
               </button>
 
-              {/* Dropdown Menu */}
               {isThemeDropdownOpen && (
-                <div 
+                <div
                   className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50"
                   role="menu"
                   aria-label="Theme selection menu"
+                  onClick={(e) => e.stopPropagation()} // prevent outside click from closing
                 >
                   <div className="py-1">
                     {themes.map(theme => (
@@ -85,7 +84,11 @@ const Navbar = () => {
                         <span>{theme.name}</span>
                         {currentTheme === theme.id && (
                           <svg className="w-4 h-4 ml-auto text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            <path
+                              fillRule="evenodd"
+                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                              clipRule="evenodd"
+                            />
                           </svg>
                         )}
                       </button>
@@ -95,30 +98,25 @@ const Navbar = () => {
               )}
             </div>
 
-            {/* Share/Export Button */}
+            {/* Share/Export */}
             {isPreviewPage ? (
-              <Button 
-                onClick={() => navigate('/')}
-                className="flex items-center gap-2"
-              >
+              <Button onClick={() => navigate('/')} className="flex items-center gap-2">
                 <AppIcon name="Home" size={16} />
                 Home
               </Button>
             ) : (
               <>
                 {hasActivities && (
-                  <Button 
-                    onClick={() => navigate('/preview')}
-                    className="flex items-center gap-2"
-                  >
+                  <Button onClick={() => navigate('/preview')} className="flex items-center gap-2">
                     <AppIcon name="Share2" size={16} />
                     Share
                   </Button>
                 )}
-                {/* <ExportButton /> */}
               </>
             )}
-            <Button variant="danger" size="md" onClick={() => dispatch(clearSchedule())} aria-label="Clear entire schedule">Clear</Button>
+            <Button variant="danger" size="md" onClick={() => dispatch(clearSchedule())} aria-label="Clear entire schedule">
+              Clear
+            </Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -133,16 +131,17 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Navigation Menu */}
+        {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 border-t border-gray-200">
+          <div
+            className="md:hidden mt-4 pb-4 border-t border-gray-200 relative z-50 bg-white"
+            onClick={(e) => e.stopPropagation()} // prevent closing when interacting
+          >
             <div className="flex flex-col space-y-3 pt-4">
-              
-              {/* Mobile Day Selector */}
               <div className="w-full">
                 <DaySelector />
               </div>
-              
+
               {/* Mobile Theme Dropdown */}
               <div className="relative">
                 <button
@@ -163,9 +162,11 @@ const Navbar = () => {
                   </svg>
                 </button>
 
-                {/* Mobile Dropdown Menu */}
                 {isThemeDropdownOpen && (
-                  <div className="mt-2 w-full bg-white rounded-lg shadow-lg border border-gray-200">
+                  <div
+                    className="mt-2 w-full bg-white rounded-lg shadow-lg border border-gray-200 relative z-50"
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <div className="py-1">
                       {themes.map(theme => (
                         <button
@@ -182,7 +183,11 @@ const Navbar = () => {
                           <span>{theme.name}</span>
                           {currentTheme === theme.id && (
                             <svg className="w-4 h-4 ml-auto text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                              <path
+                                fillRule="evenodd"
+                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                clipRule="evenodd"
+                              />
                             </svg>
                           )}
                         </button>
@@ -192,10 +197,10 @@ const Navbar = () => {
                 )}
               </div>
 
-              {/* Mobile Action Buttons */}
+              {/* Mobile Buttons */}
               <div className="flex flex-col space-y-2">
                 {isPreviewPage ? (
-                  <Button 
+                  <Button
                     onClick={() => {
                       navigate('/');
                       setIsMobileMenuOpen(false);
@@ -208,7 +213,7 @@ const Navbar = () => {
                 ) : (
                   <>
                     {hasActivities && (
-                      <Button 
+                      <Button
                         onClick={() => {
                           navigate('/preview');
                           setIsMobileMenuOpen(false);
@@ -221,13 +226,13 @@ const Navbar = () => {
                     )}
                   </>
                 )}
-                <Button 
-                  variant="danger" 
-                  size="md" 
+                <Button
+                  variant="danger"
+                  size="md"
                   onClick={() => {
                     dispatch(clearSchedule());
                     setIsMobileMenuOpen(false);
-                  }} 
+                  }}
                   className="w-full"
                   aria-label="Clear entire schedule"
                 >
@@ -239,7 +244,7 @@ const Navbar = () => {
         )}
       </div>
 
-      {/* Click outside to close dropdowns */}
+      {/* Overlay */}
       {(isThemeDropdownOpen || isMobileMenuOpen) && (
         <div
           className="fixed inset-0 z-40"
