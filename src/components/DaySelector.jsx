@@ -25,7 +25,7 @@ const DaySelector = () => {
   const titleCase = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
   return (
-    <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
+    <div className="flex items-center gap-2">
       {allDays.map(day => (
         <button
           key={day}
